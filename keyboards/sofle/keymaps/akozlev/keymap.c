@@ -3,9 +3,6 @@
 #include "swapper.h"
 #include "oneshot.h"
 
-#define HOME KC_HOME
-#define END KC_END
-
 #define WSTRL G(C(A(KC_LEFT)))
 #define WSTRR G(C(A(KC_RGHT)))
 #define WSTRU G(C(A(KC_UP)))
@@ -25,10 +22,13 @@
 
 #define ALT_F4 A(KC_F4)
 #define S_TAB S(KC_TAB)
-// #define CW_TOGG QK_CAPS_WORD_TOGGLE
 
+#define COPY C(KC_C)
+#define PASTE C(KC_V)
 // Power Toys Run
 #define PT_RUN MEH(KC_SPC)
+
+#define REDO C(KC_R)
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -48,7 +48,6 @@ enum custom_keycodes {
     SW_WIN,  // Switch to next window         (cmd-tab)
     SW_LANG, // Switch to next input language (ctl-spc)
 
-    ARROW,
 };
 
 
@@ -58,13 +57,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
       KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
       KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_QUOT, KC_ENT,
-      _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_MUTE,  KC_MPLY, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______,
-                        _______, _______, KC_LALT,  KC_SPC, LA_NAV,  LA_SYM,  KC_LSFT, KC_LGUI, _______, _______
+      _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_MUTE,  KC_MPLY, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RALT,
+                        _______, _______, KC_LALT, KC_SPC, LA_NAV,   LA_SYM,  KC_LSFT, KC_LGUI, _______, _______
   ),
 
   [SYM] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-      _______, KC_CAPS, KC_LBRC, KC_LCBR, KC_LPRN, KC_GRV,                    KC_CIRC, KC_RPRN, KC_RCBR, KC_RBRC, _______, _______,
+      _______, KC_CAPS, KC_LBRC, KC_LCBR, KC_LPRN, KC_GRV,                    KC_CIRC, KC_RPRN, KC_RCBR, KC_RBRC, CW_TOGG, _______,
       _______, KC_MINS, KC_ASTR, KC_EQL,  KC_UNDS, KC_DLR,                    KC_HASH, OS_CTRL, OS_SHFT, OS_ALT,  OS_CMD,  _______,
       _______, KC_PLUS, KC_PIPE, KC_AT,   KC_BSLS, KC_PERC, _______, _______, KC_TILD, KC_AMPR, KC_SCLN, KC_COLN, KC_EXLM, _______,
                         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -72,18 +71,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-      _______, ALT_F4,  SW_WIN,  ZONEL,   ZONER,   PT_RUN,                    KC_PSCR, HOME,    KC_UP,   END,     CW_TOGG, _______,
-      _______, OS_CMD,  OS_ALT,  OS_SHFT, OS_CTRL, _______,                   S_TAB,   KC_LEFT, KC_DOWN, KC_RGHT, KC_TAB,  _______,
-      _______, SPC_L,   SPC_R,   WSTRL,   WSTRR,   _______, KC_MPRV, KC_MNXT, KC_APP,  KC_PGDN, KC_PGUP, SW_LANG, ARROW,  _______,
+      _______, ALT_F4,  SW_WIN,  KC_ENT,  KC_ESC,  PT_RUN,                    KC_PSCR, KC_HOME, KC_UP,   KC_END,  SW_LANG, _______,
+      _______, OS_CMD,  OS_ALT,  OS_SHFT, OS_CTRL, KC_DEL,                    KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_TAB,  _______,
+      _______, SPC_L,   SPC_R,   COPY,    PASTE,   _______, KC_MPRV, KC_MNXT, KC_APP,  KC_PGDN, KC_PGUP, _______, _______, _______,
                         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
 
   [NUM] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                  _______, _______, _______, _______, _______, _______,
       _______, KC_7,    KC_5,    KC_3,    KC_1,    KC_9,                     KC_8,    KC_0,    KC_2,    KC_4,    KC_6,    _______,
-      _______, OS_CMD,  OS_ALT,  OS_SHFT, OS_CTRL, KC_F11,                   KC_F10,  OS_CTRL, OS_SHFT, OS_ALT,  OS_CMD,  _______,
+      _______, OS_CMD,  OS_ALT,  OS_SHFT, OS_CTRL, KC_F11,                   KC_F10,  OS_CTRL, OS_SHFT, OS_ALT,  OS_CMD,  TO_GAME,
       _______, KC_F7,   KC_F5,   KC_F3,   KC_F1,   KC_F9,  _______, _______, KC_F8,   KC_F12,  KC_F2,   KC_F4,   KC_F6,   _______,
                        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  ),
+
+  [GAME] = LAYOUT(
+      KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TO_GAME,
+      KC_TAB,  KC_T,    KC_Q,    KC_W,    KC_E,    KC_R,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+      KC_ESC,  KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_QUOT, KC_ENT,
+      KC_Z,    KC_LSFT, KC_X,    KC_C,    KC_V,    KC_B,   KC_MUTE,  KC_MPLY, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______,
+                        _______, _______, KC_F3,   KC_G,   KC_SPC,   TO_DEF,  KC_LSFT, KC_LGUI, _______, _______
   ),
 };
 
@@ -222,13 +229,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         &os_cmd_state, KC_LCMD, OS_CMD,
         keycode, record
     );
-    switch (keycode) {
-        case ARROW:
-            if (record->event.pressed) {
-                SEND_STRING("->");
-            }
-            return false;
-    }
 
     return true;
 }
@@ -248,9 +248,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code(KC_PGDN);
+            tap_code16(REDO);
         } else {
-            tap_code(KC_PGUP);
+            tap_code(KC_U);
         }
     }
     return true;
